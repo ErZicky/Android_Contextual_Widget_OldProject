@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PositionTriggerCreation">
+
+
+
+    <TextView
+        android:id="@+id/textViewTitleLocation"
+        style="?attr/textAppearanceHeadlineLarge"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:paddingStart="5dp"
+        android:text="Create Location Trigger"
+        android:textAlignment="center"
+        android:textColor="?attr/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/textViewSubTitleLocation"
+        style="?attr/textAppearanceSubtitle1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="15dp"
+        android:paddingStart="5dp"
+        android:text="Use the map or write the address or coordinates to set the location"
+        android:textAlignment="center"
+        android:textColor="?attr/colorOnSurface"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/textViewTitleLocation" />
+
+
+    <org.osmdroid.views.MapView
+        android:id="@+id/Mainmap"
+        android:layout_width="0dp"
+        android:layout_height="350dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSubTitleLocation" />
+
+    <ImageView
+        android:id="@+id/map_center_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/location_on_48px"
+        android:layout_centerInParent="true"
+        app:tint="?attr/colorPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="@id/Mainmap"
+        app:layout_constraintEnd_toEndOf="@id/Mainmap"
+        app:layout_constraintStart_toStartOf="@id/Mainmap"
+        app:layout_constraintTop_toTopOf="@id/Mainmap" />
+
+    <Button
+        android:id="@+id/get_position_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Use this Position"
+        android:alpha="0.65"
+        app:iconPadding="4dp"
+        app:layout_constraintEnd_toEndOf="@+id/Mainmap"
+        app:layout_constraintStart_toStartOf="@+id/Mainmap"
+        app:layout_constraintTop_toTopOf="@+id/Mainmap" />
+
+    <EditText
+        android:id="@+id/AddressText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:inputType="textMultiLine"
+        android:maxLines="2"
+        android:hint="Address"
+        android:imeOptions="actionSend"
+        app:layout_constraintEnd_toStartOf="@+id/set_address_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Mainmap" />
+
+
+    <ImageView
+        android:id="@+id/set_address_icon"
+        android:layout_width="58dp"
+        android:layout_height="0dp"
+        android:layout_centerInParent="true"
+        android:layout_marginEnd="15dp"
+        android:src="@drawable/chevron_right_48px"
+        app:layout_constraintBottom_toBottomOf="@+id/AddressText"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:foreground="?attr/selectableItemBackground"
+        android:clickable="true"
+        app:layout_constraintTop_toTopOf="@id/AddressText"
+        app:tint="?attr/colorPrimary" />
+
+
+    <EditText
+        android:id="@+id/CoordinateText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:imeOptions="actionSend"
+        android:layout_marginEnd="15dp"
+        android:inputType="text"
+        android:maxLines="1"
+        android:hint="Latitude, Longitude"
+        app:layout_constraintEnd_toStartOf="@+id/set_cords_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/AddressText" />
+
+
+
+    <ImageView
+        android:id="@+id/set_cords_icon"
+        android:layout_width="58dp"
+        android:layout_height="0dp"
+        android:layout_centerInParent="true"
+        android:layout_marginEnd="15dp"
+        android:foreground="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:src="@drawable/chevron_right_48px"
+        app:layout_constraintBottom_toBottomOf="@+id/CoordinateText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/CoordinateText"
+        app:tint="?attr/colorPrimary" />
+
+    <TextView
+        android:id="@+id/credittext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="6dp"
+        android:layout_marginBottom="2dp"
+        android:alpha="0.7"
+        android:clickable="true"
+        android:text="© OpenStreetMap contributors"
+        android:textColor="@color/LinkBlue"
+        android:textSize="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/Mainmap"
+        app:layout_constraintEnd_toEndOf="@+id/Mainmap" />
+
+
+    <TextView
+        android:id="@+id/radiuslabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:clickable="true"
+        android:text="Minimum distance to trigger: 50mt"
+        android:textColor="?attr/colorOnSurface"
+        style="?attr/textAppearanceLabelMedium"
+        app:layout_constraintBottom_toTopOf="@+id/radiusSlider"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <SeekBar
+        android:id="@+id/radiusSlider"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="15dp"
+        android:max="200"
+        android:min="20"
+        android:progressTint="?attr/colorPrimary"
+        android:thumbTint="?attr/colorPrimaryDark"
+        android:progress="50"
+        app:layout_constraintEnd_toStartOf="@+id/set_cords_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/CoordinateText" />
+
+
+    <Button
+        android:id="@+id/confirmButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:text="Confirm"
+        app:iconPadding="4dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.carousel.MaskableFrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/carousel_item_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="4dp"
+    android:foreground="?attr/selectableItemBackground"
+    android:layout_marginEnd="4dp"
+    app:shapeAppearance="?attr/shapeAppearanceCornerExtraLarge">
+
+    <!-- FrameLayout per contenere l'immagine e l'effetto ombra -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:background="@drawable/gradient"
+        android:backgroundTint="?attr/colorSecondaryContainer">
+
+
+        <ImageView
+            android:id="@+id/carousel_image_view"
+            android:layout_width="match_parent"
+            android:layout_height="96dp"
+            android:scaleType="fitCenter"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:paddingStart="15dp"
+            app:tint="?attr/colorOnPrimaryContainer"
+            android:src="@drawable/mesmalllowquality" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.7"
+            android:gravity="center"
+            android:paddingEnd="30dp"
+            android:text="Connection to: \n EARBUDS-PRO"
+            android:textAlignment="center"
+            android:textColor="?attr/colorOnPrimaryContainer"
+            android:textSize="18sp" />
+
+
+    </LinearLayout>
+</com.google.android.material.carousel.MaskableFrameLayout>

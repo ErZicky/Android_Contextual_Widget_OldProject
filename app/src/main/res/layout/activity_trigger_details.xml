@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TriggerDetails">
+
+
+    <ImageView
+        android:id="@+id/imageViewType"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitleDetails"
+        app:tint="?attr/colorPrimary"
+        tools:srcCompat="@tools:sample/avatars" />
+
+
+    <ImageView
+        android:id="@+id/imageDelete"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.65"
+        app:layout_constraintStart_toEndOf="@+id/imageViewType"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitleDetails"
+        app:srcCompat="@drawable/delete_48px"
+        android:foreground="?attr/selectableItemBackground"
+        android:clickable="true"
+        app:tint="@color/red"
+        tools:srcCompat="@drawable/delete_48px" />
+
+    <ImageView
+        android:id="@+id/imagePause"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.65"
+        app:layout_constraintStart_toEndOf="@+id/imageViewType"
+        app:layout_constraintTop_toBottomOf="@+id/imageDelete"
+        app:srcCompat="@drawable/pause_48px"
+        app:tint="?attr/colorPrimary"
+        tools:srcCompat="@drawable/pause_48px" />
+
+    <TextView
+        android:id="@+id/textViewTitleDetails"
+        style="?attr/textAppearanceHeadlineLarge"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:paddingStart="5dp"
+        android:text="Trigger Details"
+        android:textAlignment="center"
+        android:textColor="?attr/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/textView3"
+        style="?attr/textAppearanceHeadlineMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:text="Type of trigger"
+        android:textColor="?attr/colorOnSurface"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewType"
+        app:layout_constraintStart_toStartOf="@+id/imageViewType"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewType" />
+
+
+
+
+    <TextView
+        android:id="@+id/textviewsecondary"
+        style="?attr/textAppearanceHeadlineSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="60dp"
+        android:text="Network"
+        android:textColor="?attr/colorPrimary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+
+    <TextView
+        android:id="@+id/textviewRange"
+        style="?attr/textAppearanceHeadlineSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="15dp"
+        android:text="Minimum distance:"
+        android:visibility="gone"
+        android:textColor="?attr/colorPrimary"
+        app:layout_constraintBottom_toTopOf="@+id/textviewsecondary"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/LabelSecondary"
+        style="?attr/textAppearanceHeadlineSmall"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="20dp"
+        android:text="Secondary"
+        android:textAlignment="viewEnd"
+        android:textColor="?attr/colorOnSurface"
+        android:textStyle=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/textviewsecondary"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <TextView
+        android:id="@+id/LabelRange"
+        style="?attr/textAppearanceHeadlineSmall"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="20dp"
+        android:text="50"
+        android:visibility="gone"
+        android:textAlignment="viewEnd"
+        android:textColor="?attr/colorOnSurface"
+        android:textStyle=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textviewRange"
+        app:layout_constraintTop_toTopOf="@+id/textviewRange" />
+
+
+    <TextView
+        android:id="@+id/textViewAttach"
+        style="?attr/textAppearanceHeadlineSmall"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:text="Apps attached to the trigger:"
+        android:textColor="?attr/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/LabelSecondary" />
+
+
+    <TextView
+        android:id="@+id/attachsub"
+        style="?attr/textAppearanceBodyMedium"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="tap here to edit"
+        android:textAlignment="center"
+        android:textColor="?attr/colorOnSurface"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAttach" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/TriggerAppsRec"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/attachsub" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

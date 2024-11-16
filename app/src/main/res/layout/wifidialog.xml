@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- GridLayout per i dispositivi Bluetooth -->
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="?attr/colorPrimary"
+        android:text="Why can't I select a saved network? \n Unfortunatly since Android 10 Google has removed that functionality"
+        android:textAlignment="center" />" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/bluetoothRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:orientation="horizontal"
+        android:scrollbars="vertical" />
+
+
+</LinearLayout>

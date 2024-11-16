@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/radiuslabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:clickable="true"
+        android:text="Minimum distance to trigger: 50mt"
+        android:textColor="?attr/colorOnSurface"
+        style="?attr/textAppearanceLabelMedium"
+        app:layout_constraintBottom_toTopOf="@+id/radiusSlider"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <SeekBar
+        android:id="@+id/radiusSlider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="15dp"
+        android:max="200"
+        android:min="20"
+        android:progress="50"
+        android:progressTint="?attr/colorPrimary"
+        android:thumbTint="?attr/colorPrimaryDark"
+        app:layout_constraintEnd_toStartOf="@+id/set_cords_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/CoordinateText" />
+</LinearLayout>
