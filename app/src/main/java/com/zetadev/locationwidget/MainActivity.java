@@ -202,6 +202,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+        StartMonitoringLocation();
+
     }
 
 
@@ -361,19 +363,19 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    public void StartMonitoring() //posizione
+    public void StartMonitoringLocation()
     {
 
-        Log.d("agg","start monitoring");
+        Log.d("agg","start monitoring location");
         // Pianifica il Worker per aggiornare la posizione periodicamente
-        PeriodicWorkRequest locationWorkRequest = new PeriodicWorkRequest.Builder(
+        PeriodicWorkRequest wifiWorkRequest = new PeriodicWorkRequest.Builder(
                 LocationUpdateWorker.class,
                 15,
                 TimeUnit.MINUTES)
                 .build();
 
 
-        WorkManager.getInstance(this).enqueue(locationWorkRequest);
+        WorkManager.getInstance(this).enqueue(wifiWorkRequest);
     }
 
 

@@ -132,7 +132,7 @@ public class CustomWidget extends AppWidgetProvider {
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
 
-        if (ACTION_REFRESH.equals(intent.getAction())|| ACTION_LOCATION_UPDATE.equals(intent.getAction())) {
+        if (ACTION_REFRESH.equals(intent.getAction())) {
             // Se riceviamo l'intent di refresh, chiediamo l'aggiornamento del widget
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
             int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, CustomWidget.class));
@@ -152,10 +152,10 @@ public class CustomWidget extends AppWidgetProvider {
         }
 
 
-        if(ACTION_FAI_IL_CAZZO_DI_WORKER.equals(intent.getAction()))
+     /*   if(ACTION_FAI_IL_CAZZO_DI_WORKER.equals(intent.getAction()))
         {
            DoWorkerOneTime(context);
-        }
+        }*/ //TODO eliminare
 
 
         if(ACTION_CHARGING_UPDATE.equals(intent.getAction()))
@@ -165,6 +165,12 @@ public class CustomWidget extends AppWidgetProvider {
         }
 
         if(ACTION_CALL_UPDATE.equals(intent.getAction()))
+        {
+            String[] apps = intent.getStringArrayExtra("apps");
+            updateWidget(context, apps);
+        }
+
+        if( ACTION_LOCATION_UPDATE.equals(intent.getAction()))
         {
             String[] apps = intent.getStringArrayExtra("apps");
             updateWidget(context, apps);

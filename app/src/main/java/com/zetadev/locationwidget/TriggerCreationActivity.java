@@ -261,8 +261,9 @@ public class TriggerCreationActivity extends AppCompatActivity implements AppAda
         // Salva il file JSON nello storage interno
         try (FileOutputStream fos = openFileOutput("triggers.json", Context.MODE_PRIVATE)) {
             fos.write(json.getBytes());
-            //todo start monitoring position
+            StartMonitoringLocation();
             Toast.makeText(this, "Trigger saved", Toast.LENGTH_SHORT).show();
+            FinishActivity();
         } catch (IOException e) {
             Log.e("TriggerCreationActivity", "Error saving trigger", e);
             Toast.makeText(this, "Error saving trigger", Toast.LENGTH_SHORT).show();
@@ -317,6 +318,7 @@ public class TriggerCreationActivity extends AppCompatActivity implements AppAda
             fos.write(json.getBytes());
             Toast.makeText(this, "Trigger saved", Toast.LENGTH_SHORT).show();
             StartMonitoringWifi();
+            FinishActivity();
         } catch (IOException e) {
             Log.e("TriggerCreationActivity", "Error saving trigger", e);
             Toast.makeText(this, "Error saving trigger", Toast.LENGTH_SHORT).show();
@@ -377,6 +379,8 @@ public class TriggerCreationActivity extends AppCompatActivity implements AppAda
             IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
             registerReceiver(cm, filter);
 
+            FinishActivity();
+
 
         } catch (IOException e) {
             Log.e("TriggerCreationActivity", "Error saving charging trigger", e);
@@ -431,12 +435,7 @@ public class TriggerCreationActivity extends AppCompatActivity implements AppAda
             fos.write(json.getBytes());
             Toast.makeText(this, "Calling  trigger saved", Toast.LENGTH_SHORT).show();
 
-
-            // Inizializza e registra il receiver per lo stato della batteria
-            ChargingMonitor  cm= new ChargingMonitor();
-            IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-            registerReceiver(cm, filter);
-
+            FinishActivity();
 
         } catch (IOException e) {
 
@@ -491,12 +490,28 @@ public class TriggerCreationActivity extends AppCompatActivity implements AppAda
         try (FileOutputStream fos = openFileOutput("triggers.json", Context.MODE_PRIVATE)) {
             fos.write(json.getBytes());
             Toast.makeText(this, "Trigger saved", Toast.LENGTH_SHORT).show();
+            FinishActivity();
         } catch (IOException e) {
             Log.e("TriggerCreationActivity", "Error saving trigger", e);
             Toast.makeText(this, "Error saving trigger", Toast.LENGTH_SHORT).show();
         }
     }
 
+
+
+    private void FinishActivity()
+    {
+        //this.finish();
+
+        Intent intent = new Intent(TriggerCreationActivity.this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        //FLAG_ACTIVITY_CLEAR_TOP: Rimuove tutte le attività sopra MainActivity.
+        //FLAG_ACTIVITY_NEW_TASK: Garantisce che l'attività Main sia avviata in una nuova task se necessario.
+        startActivity(intent);
+        finish();
+
+
+    }
 
 
     public void StartMonitoringWifi()
@@ -513,5 +528,24 @@ public class TriggerCreationActivity extends AppCompatActivity implements AppAda
 
         WorkManager.getInstance(this).enqueue(wifiWorkRequest);
     }
+
+
+    public void StartMonitoringLocation()
+    {
+
+        Log.d("agg","start monitoring location");
+        // Pianifica il Worker per aggiornare la posizione periodicamente
+        PeriodicWorkRequest wifiWorkRequest = new PeriodicWorkRequest.Builder(
+                LocationUpdateWorker.class,
+                15,
+                TimeUnit.MINUTES)
+                .build();
+
+
+        WorkManager.getInstance(this).enqueue(wifiWorkRequest);
+    }
+
+
+
 
 }

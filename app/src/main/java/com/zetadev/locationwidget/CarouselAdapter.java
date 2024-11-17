@@ -127,7 +127,6 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.ViewHo
                     String convertedcoordinates =  AddressHelper.getShortAddressFromCoordinates(context, Double.parseDouble(cords[0]), Double.parseDouble(cords[1]));
 
 
-
                     return "when near: " + convertedcoordinates;
                 case "null":
                     return "Currently there are no active triggers";

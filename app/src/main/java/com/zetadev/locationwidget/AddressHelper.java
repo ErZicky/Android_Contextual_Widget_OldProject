@@ -8,6 +8,7 @@ import android.util.Log;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class AddressHelper {
 
@@ -86,11 +87,20 @@ public class AddressHelper {
             StringBuilder addressString = new StringBuilder();
 
             // Append address components (e.g., street, city, country)
-
-                addressString.append(address.getThoroughfare()).append(" ");
-                addressString.append(address.getSubThoroughfare()).append(", ");
+                if(Objects.equals(address.getThoroughfare(), "null") || address.getThoroughfare() == null)
+                {
+                    addressString.append(address.getFeatureName()).append(", ");
+                }
+                else
+                {
+                    addressString.append(address.getThoroughfare()).append(" ");
+                    addressString.append(address.getSubThoroughfare()).append(", ");
+                }
                 addressString.append(address.getLocality()).append(", ");
                 addressString.append(address.getCountryName()).append(", ");
+
+
+
 
             return addressString.toString().trim();
         } catch (IOException e) {

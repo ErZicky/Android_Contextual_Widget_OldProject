@@ -88,7 +88,16 @@ public class ReceiverRegistrationService extends Service {
             }
             else if(extra[i].equals("location"))
             {
-                //TODO
+                WriteLog(getApplicationContext(), "start monitoring location\n");
+                // Pianifica il Worker per aggiornare la posizione periodicamente
+                PeriodicWorkRequest wifiWorkRequest = new PeriodicWorkRequest.Builder(
+                        LocationUpdateWorker.class,
+                        15,
+                        TimeUnit.MINUTES)
+                        .build();
+
+
+                WorkManager.getInstance(this).enqueue(wifiWorkRequest);
             }
             else if(extra[i].equals("WI-FI"))
             {
