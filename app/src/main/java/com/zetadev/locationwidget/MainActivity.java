@@ -56,6 +56,8 @@ import com.google.android.material.carousel.CarouselLayoutManager;
 import com.google.android.material.color.DynamicColors;
 import com.google.android.material.color.utilities.DynamicColor;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.timepicker.MaterialTimePicker;
+import com.google.android.material.timepicker.TimeFormat;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -99,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
         View chargingbutton = findViewById(R.id.chargtrigg);
         View callbutton = findViewById(R.id.calltrigg);
         View locationbutton = findViewById(R.id.loctrigg);
+        View clockbutton = findViewById(R.id.ClockTrigg);
         carouselRecyclerView = findViewById(R.id.carousel_recycler_view);
 
 
@@ -183,10 +186,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        clockbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CreateClockDialog();
+            }
+        });
+
 
 
       checkPhoneStatePermission();
-
+        CheckNotPermissions();
 
 
 //check workers
@@ -202,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        StartMonitoringLocation();
+     //   StartMonitoringLocation();
 
     }
 
@@ -282,6 +292,23 @@ public class MainActivity extends AppCompatActivity {
 
         /****/
 
+    }
+
+
+
+    private void CheckNotPermissions()
+    {
+        // Controlla il permesso di ACCESS_FINE_LOCATION
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Se non è stato concesso, richiedi il permesso
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.POST_NOTIFICATIONS}, PERMISSION_REQUEST_LOCATION);
+        } else {
+            // Il permesso è già stato concesso, puoi iniziare a monitorare la posizione
+
+        }
     }
 
 
@@ -550,6 +577,46 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+    private void CreateClockDialog()
+    {
+        // Crea un Material Time Picker
+        MaterialTimePicker timePicker = new MaterialTimePicker.Builder()
+                .setTimeFormat(TimeFormat.CLOCK_24H) // Usa 24 ore (per 12 ore usa TimeFormat.CLOCK_12H)
+                .setHour(12) // Ora iniziale
+                .setMinute(0) // Minuto iniziale
+                .setTitleText("Select Time") // Testo del dialog
+                .build();
+
+        // Mostra il Time Picker
+        timePicker.show(getSupportFragmentManager(), "TIME_PICKER");
+        // Gestisci l'ora selezionata
+        timePicker.addOnPositiveButtonClickListener(v -> {
+            int selectedHour = timePicker.getHour();
+            int selectedMinute = timePicker.getMinute();
+
+            // Fai qualcosa con l'ora selezionata (ad esempio, aggiorna un TextView)
+            String time = String.format("%02d:%02d", selectedHour, selectedMinute);
+            // Mostra l'ora selezionata
+            Log.d("agg", time);
+
+            timePicker.dismiss();
+            Intent i = new Intent(MainActivity.this, TriggerCreationActivity.class);
+            String type = "CLOCK";
+            i.putExtra("STRING_TYPE", type);
+            i.putExtra("STRING_DEVICE", time);
+            startActivity(i);
+
+        });
+
+        // (Opzionale) Gestisci annullamento
+        timePicker.addOnNegativeButtonClickListener(v -> {
+
+        });
+    }
+
+
+
     private void CreateLocationDialog()
     {
 
@@ -615,7 +682,7 @@ public class MainActivity extends AppCompatActivity {
                     resultList.add(map);
                 }
                 // Per "bluetooth", "wifi", o altri casi simili, processiamo i dispositivi
-                else if (key.equals("bluetooth") || key.equals("WI-FI")|| key.equals("location")) {
+                else if (key.equals("bluetooth") || key.equals("WI-FI")|| key.equals("location")|| key.equals("CLOCK")) {
                     JSONObject innerObject = jsonObject.getJSONObject(key);
 
                     // Iteriamo sulle chiavi interne (es. "E_Buds Pro", "Pixel 4a", ecc.)

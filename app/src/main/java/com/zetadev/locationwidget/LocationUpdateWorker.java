@@ -1,14 +1,20 @@
 package com.zetadev.locationwidget;
 
+import android.annotation.SuppressLint;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.Build;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
@@ -100,19 +106,22 @@ public class LocationUpdateWorker extends Worker {
                                     updateIntent.setAction("com.zetadev.locationwidget.ACTION_LOCATION_UPDATE");
                                     updateIntent.putExtra("apps", associatedApps); // Aggiungi le app all'intento
                                     getApplicationContext().sendBroadcast(updateIntent);
-
+                                    showNotification(getApplicationContext(), "Controllo effettuato posizione valida trovata");
                                     break; // Una posizione valida trovata, non è necessario continuare
                                 }else {
                                     Log.d("agg", "Fuori dal range di " + key);
+                                    showNotification(getApplicationContext(), "Controllo effettuato posizione non valida");
                                 }
                             }
                         } catch (JSONException e) {
                             Log.e("agg", "Errore durante il parsing del JSON: " + e.getMessage());
+                            showNotification(getApplicationContext(), "Controllo effettuato errore con il json");
                         }
                     }
                 }
             }
         });
+
 
         return Result.success();
     }
@@ -149,6 +158,29 @@ public class LocationUpdateWorker extends Worker {
             Log.e("agg", "Errore durante il caricamento del file JSON: " + e.getMessage());
             return null;
         }
+    }
+
+
+    @SuppressLint("MissingPermission")
+    private void showNotification(Context context, String Desc) {
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, "TEST_NOT")
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle("Location Check")
+                .setContentText(Desc)
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText(Desc))
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Channel_name";
+            String description = "HO appena controllato la posizione";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("TEST_NOT", name, importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+        notificationManager.notify(100, mBuilder.build());
     }
 }
 

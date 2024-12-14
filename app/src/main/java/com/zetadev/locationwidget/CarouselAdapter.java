@@ -94,6 +94,8 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.ViewHo
                     return R.drawable.wifi_48px;
                 case "location":
                     return R.drawable.location_on_48px;
+                case "CLOCK":
+                    return R.drawable.schedule_48px;
                 case "null":
                     return R.drawable.person_cancel_48px;
 
@@ -128,6 +130,8 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.ViewHo
 
 
                     return "when near: " + convertedcoordinates;
+                case "CLOCK":
+                    return "When the time is: " + secondkey;
                 case "null":
                     return "Currently there are no active triggers";
                 default:

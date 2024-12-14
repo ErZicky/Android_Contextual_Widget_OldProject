@@ -3,6 +3,7 @@ package com.zetadev.locationwidget;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.BatteryManager;
 import android.util.Log;
 
@@ -10,6 +11,8 @@ import com.google.gson.Gson;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Map;
@@ -20,11 +23,13 @@ public class ChargingMonitor extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
 
+        WriteLog(context, "power changing\n");
+
         if (Intent.ACTION_POWER_CONNECTED.equals(action)) {
 
                 Log.d("agg", "Device is charging");
 
-
+         WriteLog(context, "Device is charging\n");
 
                 // Leggi il file JSON
                 Map<String, Object> triggerData = readTriggerFromFile(context);
@@ -71,6 +76,30 @@ public class ChargingMonitor extends BroadcastReceiver {
         } catch (Exception e) {
 
             return null;
+        }
+    }
+
+    private void WriteLog(Context context, String message) {
+
+
+        String fileName = "log.txt";
+        String data =   message;
+
+        FileOutputStream fos = null;
+        try {
+            // Apri il file in modalità append (MODE_APPEND)
+            fos = context.openFileOutput(fileName, Context.MODE_APPEND);
+            fos.write(data.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }

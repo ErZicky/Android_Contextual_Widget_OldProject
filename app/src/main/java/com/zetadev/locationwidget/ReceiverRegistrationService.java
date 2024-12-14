@@ -10,6 +10,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
@@ -78,17 +79,22 @@ public class ReceiverRegistrationService extends Service {
             if(extra[i].equals("charging"))
             {
                 // Crea il nuovo receiver
-                cm = new ChargingMonitor();
+             /*   cm = new ChargingMonitor();
 
                 // Inizializza e registra il receiver per lo stato della batteria
                 IntentFilter filter = new IntentFilter(Intent.ACTION_POWER_CONNECTED);
                 registerReceiver(cm, filter);
 
-                WriteLog(getApplicationContext(), "Charging receiver registed\n");
+                WriteLog(getApplicationContext(), "Charging receiver registed\n");*/
+
+
+                Intent serviceIntent = new Intent(this, ChargingStartingService.class);
+                ContextCompat.startForegroundService(this, serviceIntent);
+
             }
             else if(extra[i].equals("location"))
             {
-                WriteLog(getApplicationContext(), "start monitoring location\n");
+               /* WriteLog(getApplicationContext(), "start monitoring location\n");
                 // Pianifica il Worker per aggiornare la posizione periodicamente
                 PeriodicWorkRequest wifiWorkRequest = new PeriodicWorkRequest.Builder(
                         LocationUpdateWorker.class,
@@ -97,12 +103,15 @@ public class ReceiverRegistrationService extends Service {
                         .build();
 
 
-                WorkManager.getInstance(this).enqueue(wifiWorkRequest);
+                WorkManager.getInstance(this).enqueue(wifiWorkRequest);*/
+
+                Intent serviceIntent = new Intent(this, LocationForegroundService.class);
+                ContextCompat.startForegroundService(this, serviceIntent);
             }
             else if(extra[i].equals("WI-FI"))
             {
 
-                WriteLog(getApplicationContext(), "start monitoringwifi\n");
+            /*    WriteLog(getApplicationContext(), "start monitoringwifi\n");
                 // Pianifica il Worker per aggiornare la posizione periodicamente
                 PeriodicWorkRequest wifiWorkRequest = new PeriodicWorkRequest.Builder(
                         WifiMonitor.class,
@@ -111,7 +120,10 @@ public class ReceiverRegistrationService extends Service {
                         .build();
 
 
-                WorkManager.getInstance(this).enqueue(wifiWorkRequest);
+                WorkManager.getInstance(this).enqueue(wifiWorkRequest);*/
+
+                Intent serviceIntent = new Intent(this, WifiForegroundService.class);
+                ContextCompat.startForegroundService(this, serviceIntent);
             }
         }
     }

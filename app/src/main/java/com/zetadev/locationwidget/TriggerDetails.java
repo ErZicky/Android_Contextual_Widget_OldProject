@@ -210,6 +210,8 @@ public class TriggerDetails extends AppCompatActivity {
                     return R.drawable.wifi_48px;
                 case "location":
                         return  R.drawable.location_on_48px;
+                case "CLOCK":
+                    return R.drawable.schedule_48px;
                 case "null":
                     return R.drawable.person_cancel_48px;
 
@@ -240,6 +242,8 @@ public class TriggerDetails extends AppCompatActivity {
                     return  "Location trigger";
                 case "null":
                     return "Currently there are no active triggers";
+                case "CLOCK":
+                    return "Time of day trigger";
                 default:
 
                     return "Trigger";
@@ -271,6 +275,11 @@ public class TriggerDetails extends AppCompatActivity {
                     break;
                 case "WI-FI":
                     SecondLabel.setText("Network:");
+                    SubTrigger.setText(secondkey.toString());
+                    SubTrigger.setPaintFlags(SubTrigger.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
+                    break;
+                case "CLOCK":
+                    SecondLabel.setText("Time:");
                     SubTrigger.setText(secondkey.toString());
                     SubTrigger.setPaintFlags(SubTrigger.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
                     break;

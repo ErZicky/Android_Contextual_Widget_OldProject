@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -31,6 +32,7 @@ import com.google.gson.Gson;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -97,6 +99,10 @@ public class TriggerCreationActivity extends AppCompatActivity implements AppAda
                 else if(TriggerType.equals("incall"))
                 {
                     saveCallTriggerToFile(selectedApps);
+                }
+                else if(TriggerType.equals("CLOCK"))
+                {
+                    saveClockTriggerToFile(DeviceName, selectedApps);
                 }
                 else if(TriggerType.equals("location"))
                 {
@@ -261,7 +267,8 @@ public class TriggerCreationActivity extends AppCompatActivity implements AppAda
         // Salva il file JSON nello storage interno
         try (FileOutputStream fos = openFileOutput("triggers.json", Context.MODE_PRIVATE)) {
             fos.write(json.getBytes());
-            StartMonitoringLocation();
+           // StartMonitoringLocation();
+            startLocationService();
             Toast.makeText(this, "Trigger saved", Toast.LENGTH_SHORT).show();
             FinishActivity();
         } catch (IOException e) {
@@ -375,11 +382,19 @@ public class TriggerCreationActivity extends AppCompatActivity implements AppAda
 
 
             // Inizializza e registra il receiver per lo stato della batteria
-            ChargingMonitor  cm= new ChargingMonitor();
-            IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-            registerReceiver(cm, filter);
+        //    ChargingMonitor  cm= new ChargingMonitor();
+          //  IntentFilter filter = new IntentFilter();
+         //   filter.addAction(Intent.ACTION_POWER_CONNECTED);
+         //   filter.addAction(Intent.ACTION_POWER_DISCONNECTED);
+        //    registerReceiver(cm, filter);
 
-            FinishActivity();
+
+
+
+            Intent serviceIntent = new Intent(this, ChargingStartingService.class);
+            ContextCompat.startForegroundService(this, serviceIntent);
+
+          FinishActivity();
 
 
         } catch (IOException e) {
@@ -499,6 +514,62 @@ public class TriggerCreationActivity extends AppCompatActivity implements AppAda
 
 
 
+    private void saveClockTriggerToFile(String Time, List<ResolveInfo> selectedApps) {
+        Map<String, Object> triggerData;
+
+        // Prova a leggere il file esistente
+        try (FileInputStream fis = openFileInput("triggers.json")) {
+            int size = fis.available();
+            byte[] buffer = new byte[size];
+            fis.read(buffer);
+            String jsonStr = new String(buffer);
+
+            // Deserializza il contenuto del file JSON
+            Gson gson = new Gson();
+            triggerData = gson.fromJson(jsonStr, Map.class);
+
+            if (triggerData == null) {
+                triggerData = new HashMap<>();
+            }
+
+            // Assicurati che ci sia una chiave "bluetooth"
+            if (!triggerData.containsKey("CLOCK")) {
+                triggerData.put("CLOCK", new HashMap<String, Object>());
+            }
+        } catch (IOException e) {
+            // Se il file non esiste o non può essere letto, crea una nuova mappa
+            triggerData = new HashMap<>();
+            triggerData.put("CLOCK", new HashMap<String, Object>());
+        }
+
+        // Ottieni la mappa per i dispositivi Bluetooth
+        Map<String, Object> bluetoothData = (Map<String, Object>) triggerData.get("CLOCK");
+
+        // Crea i dati per il nuovo trigger
+        Map<String, Object> deviceData = new HashMap<>();
+        deviceData.put("apps", selectedApps.stream().map(app -> app.activityInfo.packageName).toArray());
+
+        // Aggiungi o sovrascrivi il trigger esistente per il deviceName
+        bluetoothData.put(Time, deviceData);
+
+        // Serializza l'oggetto JSON aggiornato
+        Gson gson = new Gson();
+        String json = gson.toJson(triggerData);
+
+        // Salva il file JSON nello storage interno
+        try (FileOutputStream fos = openFileOutput("triggers.json", Context.MODE_PRIVATE)) {
+            fos.write(json.getBytes());
+            Toast.makeText(this, "Trigger saved", Toast.LENGTH_SHORT).show();
+            FinishActivity();
+        } catch (IOException e) {
+            Log.e("TriggerCreationActivity", "Error saving trigger", e);
+            Toast.makeText(this, "Error saving trigger", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+
+
     private void FinishActivity()
     {
         //this.finish();
@@ -517,7 +588,7 @@ public class TriggerCreationActivity extends AppCompatActivity implements AppAda
     public void StartMonitoringWifi()
     {
 
-        Log.d("agg","start monitoringwifi");
+     /*   Log.d("agg","start monitoringwifi");
         // Pianifica il Worker per aggiornare la posizione periodicamente
         PeriodicWorkRequest wifiWorkRequest = new PeriodicWorkRequest.Builder(
                 WifiMonitor.class,
@@ -526,7 +597,10 @@ public class TriggerCreationActivity extends AppCompatActivity implements AppAda
                 .build();
 
 
-        WorkManager.getInstance(this).enqueue(wifiWorkRequest);
+        WorkManager.getInstance(this).enqueue(wifiWorkRequest);*/
+
+        Intent serviceIntent = new Intent(this, WifiForegroundService.class);
+        ContextCompat.startForegroundService(this, serviceIntent);
     }
 
 
@@ -543,6 +617,11 @@ public class TriggerCreationActivity extends AppCompatActivity implements AppAda
 
 
         WorkManager.getInstance(this).enqueue(wifiWorkRequest);
+    }
+
+    public void startLocationService() {
+        Intent serviceIntent = new Intent(this, LocationForegroundService.class);
+        ContextCompat.startForegroundService(this, serviceIntent);
     }
 
 
