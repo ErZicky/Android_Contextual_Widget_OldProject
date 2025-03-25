@@ -11,7 +11,23 @@ That said, even though this is a rough, poorly organized codebase, I decided to 
 🚧 **Project on Hold**  
 While I like the idea and it was doable (even with evolving Android permission policies that made implementation more challenging) Due to time constraints, I ultimately put this project on indefinite hold.
 
+### Screenshots
+<details>
+<summary>Expand</summary>
 
-### Screenshots  
+#### Home page example:
+![home page example](screens/home.png)
 
-Home page:
+#### Trigger creation example (location in this case):
+![Trigger creation example (location in this case)](screens/loccrea.png)
+
+#### Trigger details example:
+![Trigger details example](screens/bluedet.png)
+
+#### Wifi selection for trigger:
+![Wifi selection for trigger](screens/wifisel.png)
+
+#### Widget look:
+![Widget](screens/wid.png)
+
+</details>
