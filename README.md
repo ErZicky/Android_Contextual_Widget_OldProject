@@ -29,7 +29,5 @@ While I like the idea and it was doable (even with evolving Android permission p
 #### Wifi selection for trigger:
 ![Wifi selection for trigger](screens/wifisel.png)
 
-#### Widget look:
-![Widget](screens/wid.png)
 
 </details>
